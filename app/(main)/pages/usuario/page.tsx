@@ -182,6 +182,10 @@ const Usuario = () => {
         _usuario[`${name}`] = val;
 
         setUsuario(_usuario);
+        // setUsuario(prevUsuario => ({
+        //     ...prevUsuario,
+        //     [name]: val,
+        //   }));
     };
 
     const leftToolbarTemplate = () => {
