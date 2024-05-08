@@ -10,4 +10,9 @@ export class LoginService{
         return axiosInstance.post("/auth/novoUsuario", usuario);
     }
 
+    login(login: String, senha: String){
+        return axiosInstance.post("/auth/login", 
+            { username: login, password: senha});
+    }
+
 }
