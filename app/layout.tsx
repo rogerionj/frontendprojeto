@@ -6,21 +6,52 @@ import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
+import { useEffect, useState } from 'react';
+import LoginPage from './(full-page)/auth/login/page';
 
 interface RootLayoutProps {
     children: React.ReactNode;
 }
 
+const checkAuth = () => {
+
+    if (localStorage.getItem('TOKEN_APLICACAO_FRONTEND') != undefined) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 export default function RootLayout({ children }: RootLayoutProps) {
+
+    const [pageLoaded, setPageLoaded] = useState(false);
+    const [autenticado, setAutenticado] = useState(false);
+
+    useEffect(() => {
+        setAutenticado(checkAuth());
+        setPageLoaded(true);
+    }, []);
+
     return (
         <html lang="en" suppressHydrationWarning>
             <head>
                 <link id="theme-css" href={`/themes/lara-light-indigo/theme.css`} rel="stylesheet"></link>
             </head>
             <body>
-                <PrimeReactProvider>
-                    <LayoutProvider>{children}</LayoutProvider>
-                </PrimeReactProvider>
+                {autenticado ?
+                    <PrimeReactProvider>
+                        <LayoutProvider>{children}</LayoutProvider>
+                    </PrimeReactProvider>
+                    :
+                    pageLoaded ?
+                        <PrimeReactProvider>
+                            <LayoutProvider>
+                                <LoginPage />
+                            </LayoutProvider>
+                        </PrimeReactProvider>
+                        :
+                        null
+                }
             </body>
         </html>
     );
