@@ -8,6 +8,7 @@ import '../styles/layout/layout.scss';
 import '../styles/demo/Demos.scss';
 import { useEffect, useState } from 'react';
 import LoginPage from './(full-page)/auth/login/page';
+import { usePathname } from 'next/navigation';
 
 interface RootLayoutProps {
     children: React.ReactNode;
@@ -26,11 +27,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
     const [pageLoaded, setPageLoaded] = useState(false);
     const [autenticado, setAutenticado] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
-        setAutenticado(checkAuth());
-        setPageLoaded(true);
-    }, []);
+        if(pathname.startsWith('/pages') || pathname == '/'){
+            setAutenticado(checkAuth());
+            setPageLoaded(true);
+        }else{
+            setAutenticado(true);
+            setPageLoaded(true);
+        }
+    }, [pathname]);
 
     return (
         <html lang="en" suppressHydrationWarning>

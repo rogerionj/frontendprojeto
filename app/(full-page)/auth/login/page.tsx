@@ -10,6 +10,7 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { LoginService } from '../../../../service/LoginService';
 import { Toast } from 'primereact/toast';
+import Link from 'next/link';
 
 const LoginPage = () => {
     
@@ -34,6 +35,7 @@ const LoginPage = () => {
             localStorage.setItem('TOKEN_APLICACAO_FRONTEND', response.data.token);
 
             router.push('/');
+            window.location.reload();
         }).catch(() => {
             
             toast.current?.show({
@@ -84,6 +86,7 @@ const LoginPage = () => {
                                 </a>
                             </div>
                             <Button label="Entrar" className="w-full p-3 text-xl" onClick={() => efetuarLogin()}></Button>
+                           
                         </div>
                     </div>
                 </div>
